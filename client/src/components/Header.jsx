@@ -3,9 +3,11 @@ import { Button, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const path = useLocation().pathname;
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   return (
     <Navbar className={"border-b-2"}>
@@ -42,11 +44,15 @@ const Header = () => {
           <FaMoon />
         </Button>
 
-        <Link to={"/sign-in"}>
-          <Button gradientDuoTone={"purpleToBlue"} outline>
-            Sign In
-          </Button>
-        </Link>
+        {isAuthenticated ? (
+          <span className="text-lg font-semibold">{user?.username}</span>
+        ) : (
+          <Link to="/sign-in">
+            <Button gradientDuoTone="purpleToBlue" outline>
+              Sign In
+            </Button>
+          </Link>
+        )}
         <Navbar.Toggle />
       </div>
 

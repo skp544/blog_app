@@ -66,6 +66,11 @@ exports.signUp = async (req, res) => {
       success: true,
       message: "User created successfully!",
       token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
     });
   } catch (e) {
     return errorResponse({ res, message: e.message });
@@ -118,6 +123,11 @@ exports.signIn = async (req, res) => {
       success: true,
       message: "Logged in successfully!",
       token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
     });
   } catch (e) {
     return errorResponse({ res, message: e.message });

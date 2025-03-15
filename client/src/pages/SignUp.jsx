@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, TextInput } from "flowbite-react";
 import toast from "react-hot-toast";
 import { signUpApi } from "../apis/auth.js";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/authSlice.js";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +12,9 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,14 +22,16 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const response = await signUpApi(formData);
-
+    setLoading(false);
     console.log(response);
 
     if (response?.success) {
       toast.success(response.message);
       localStorage.setItem("authToken", response.token);
+      dispatch(login({ token: response.token, user: response.user }));
       return navigate("/");
     }
 
@@ -99,8 +105,12 @@ const SignUp = () => {
               />
             </div>
 
-            <Button gradientDuoTone={"purpleToPink"} type={"submit"}>
-              Sign Up
+            <Button
+              disabled={loading}
+              gradientDuoTone={"purpleToPink"}
+              type={"submit"}
+            >
+              {loading ? "Signing up..." : "Register"}
             </Button>
           </form>
 
