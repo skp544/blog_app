@@ -5,17 +5,21 @@ import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Projects from "./pages/Projects.jsx";
+import Header from "./components/Header.jsx";
 
 function App() {
   return (
-    <Routes>
-      <Route path={"/"} element={<Home />} />
-      <Route path={"/about"} element={<About />} />
-      <Route path={"/sign-in"} element={<SignIn />} />
-      <Route path={"/sign-up"} element={<SignUp />} />
-      <Route path={"/dashboard"} element={<Dashboard />} />
-      <Route path={"/projects"} element={<Projects />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path={"/"} element={<Home />} />
+        <Route path={"/about"} element={<About />} />
+        <Route path={"/sign-in"} element={<SignIn />} />
+        <Route path={"/sign-up"} element={<SignUp />} />
+        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"/projects"} element={<Projects />} />
+      </Routes>
+    </>
   );
 }
 
