@@ -36,7 +36,7 @@ npm install
 
 **Set Up Environment Variables**
 
-Create a new file named `.env` in the root of your project and add the following content:
+Create a new file named `.env` in the root of your server and add the following content:
 
 ```env
 PORT=3000
@@ -75,6 +75,8 @@ npm install
 ```
 
 **Set Up Environment Variables**
+
+Create a new file named `.env` in the root of your client and add the following content:
 
 ```env
 VITE_FIREBASE_API_KEY=
