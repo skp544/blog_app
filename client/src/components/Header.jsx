@@ -1,5 +1,5 @@
 import React, { use } from "react";
-import { Avatar, Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa6";
@@ -45,15 +45,23 @@ const Header = () => {
         </Button>
 
         {isAuthenticated ? (
-          <div className={"flex items-center gap-x-2"}>
-            <span className="text-lg font-semibold">{user?.username}</span>
-            {/*<Avatar img={user?.photoUrl} alt={user?.username} rounded />*/}
-            <img
-              src={user?.photoUrl}
-              className={"h-8 w-8 rounded-full"}
-              alt={user?.username}
-            />
-          </div>
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={<Avatar img={user?.photoUrl} alt={user?.username} rounded />}
+          >
+            <Dropdown.Header>
+              <span className={"block text-sm"}>@{user?.username}</span>
+              <span className={"block truncate text-sm font-medium"}>
+                @{user?.email}
+              </span>
+            </Dropdown.Header>
+            <Link to={"/dashboard?tab=profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign Out</Dropdown.Item>
+          </Dropdown>
         ) : (
           <Link to="/sign-in">
             <Button gradientDuoTone="purpleToBlue" outline>

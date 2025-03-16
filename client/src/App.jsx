@@ -9,6 +9,7 @@ import Header from "./components/Header.jsx";
 import FooterMain from "./components/FooterMain.jsx";
 import Profile from "./pages/Profile.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import PublicRoute from "./components/PublicRoute.jsx";
 
 function App() {
   return (
@@ -17,11 +18,13 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/about"} element={<About />} />
-        <Route path={"/sign-in"} element={<SignIn />} />
-        <Route path={"/sign-up"} element={<SignUp />} />
-        <Route path={"/dashboard"} element={<Dashboard />} />
         <Route path={"/projects"} element={<Projects />} />
+        <Route element={<PublicRoute />}>
+          <Route path={"/sign-in"} element={<SignIn />} />
+          <Route path={"/sign-up"} element={<SignUp />} />
+        </Route>
         <Route element={<PrivateRoute />}>
+          <Route path={"/dashboard"} element={<Dashboard />} />
           <Route path={"/profile"} element={<Profile />} />
         </Route>
       </Routes>
