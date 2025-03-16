@@ -31,7 +31,6 @@ const OAuth = () => {
       setLoading(true);
       const response = await googleAuthApi(formData);
       setLoading(false);
-      console.log(response);
 
       if (!response?.success) {
         return toast.error(response?.message);

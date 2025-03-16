@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user-model"); // Adjust based on your project structure
-const { errorResponse } = require("../lib/helper");
+const User = require("../models/user-model");
+const { errorResponse, userFormatter } = require("../lib/helper");
 
-const JWT_SECRET = process.env.JWT_SECRET; // Use env variable
+const JWT_SECRET = process.env.JWT_SECRET;
 
 /**
  * @body {String} username - The username of the user
@@ -27,7 +27,7 @@ exports.signUp = async (req, res) => {
     if (existingUser) {
       return errorResponse({
         res,
-        message: "User already exists",
+        message: "User already exists! Please sign in!",
         status: 400,
       });
     }
@@ -66,12 +66,7 @@ exports.signUp = async (req, res) => {
       success: true,
       message: "User created successfully!",
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        photoUrl: user.photoUrl,
-      },
+      user: userFormatter(user),
     });
   } catch (e) {
     return errorResponse({ res, message: e.message });
@@ -101,7 +96,7 @@ exports.signIn = async (req, res) => {
     if (!user) {
       return errorResponse({
         res,
-        message: "Invalid credentials",
+        message: "User not exists! Please sign up",
         status: 401,
       });
     }
@@ -124,12 +119,7 @@ exports.signIn = async (req, res) => {
       success: true,
       message: "Logged in successfully!",
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        photoUrl: user.photoUrl,
-      },
+      user: userFormatter(user),
     });
   } catch (e) {
     return errorResponse({ res, message: e.message });
@@ -151,12 +141,7 @@ exports.googleAuth = async (req, res) => {
         success: true,
         message: "Logged in successfully!",
         token,
-        user: {
-          id: user._id,
-          username: user.username,
-          email: user.email,
-          photoUrl: user.photoUrl,
-        },
+        user: userFormatter(user),
       });
     } else {
       const generatedPassword = Math.random().toString(36).slice(-8);
@@ -186,12 +171,7 @@ exports.googleAuth = async (req, res) => {
         success: true,
         message: "Logged in successfully!",
         token,
-        user: {
-          id: newUser._id,
-          username: newUser.username,
-          email: newUser.email,
-          photoUrl: newUser.photoUrl,
-        },
+        user: userFormatter(newUser),
       });
     }
   } catch (e) {
