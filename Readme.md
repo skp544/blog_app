@@ -34,7 +34,7 @@ Install the project dependencies using npm:
 npm install
 ```
 
-**Set Up Environment Variables**
+**Set Up Environment Variables For Server**
 
 Create a new file named `.env` in the root of your server and add the following content:
 
@@ -74,7 +74,7 @@ Install the project dependencies using npm:
 npm install
 ```
 
-**Set Up Environment Variables**
+**Set Up Environment Variables For Client**
 
 Create a new file named `.env` in the root of your client and add the following content:
 
