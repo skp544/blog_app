@@ -70,6 +70,7 @@ exports.signUp = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        photoUrl: user.photoUrl,
       },
     });
   } catch (e) {
@@ -127,8 +128,72 @@ exports.signIn = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        photoUrl: user.photoUrl,
       },
     });
+  } catch (e) {
+    return errorResponse({ res, message: e.message });
+  }
+};
+
+exports.googleAuth = async (req, res) => {
+  try {
+    const { name, email, photoUrl } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+        expiresIn: "7d",
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Logged in successfully!",
+        token,
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          photoUrl: user.photoUrl,
+        },
+      });
+    } else {
+      const generatedPassword = Math.random().toString(36).slice(-8);
+
+      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+
+      const newUser = new User({
+        username:
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+        email: email,
+        password: hashedPassword,
+        photoUrl,
+      });
+
+      await newUser.save();
+
+      const token = jwt.sign(
+        { id: newUser._id, email: newUser.email },
+        JWT_SECRET,
+        {
+          expiresIn: "7d",
+        },
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Logged in successfully!",
+        token,
+        user: {
+          id: newUser._id,
+          username: newUser.username,
+          email: newUser.email,
+          photoUrl: newUser.photoUrl,
+        },
+      });
+    }
   } catch (e) {
     return errorResponse({ res, message: e.message });
   }

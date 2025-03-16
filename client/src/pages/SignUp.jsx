@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { signUpApi } from "../apis/auth.js";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/authSlice.js";
+import OAuth from "../components/OAuth.jsx";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -112,6 +113,12 @@ const SignUp = () => {
             >
               {loading ? "Signing up..." : "Register"}
             </Button>
+
+            <span className={"text-center text-lg font-semibold text-gray-400"}>
+              OR
+            </span>
+
+            <OAuth />
           </form>
 
           <div className={"mt-3 flex gap-2 text-sm"}>

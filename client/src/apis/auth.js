@@ -18,3 +18,13 @@ export const signInApi = async (formData) => {
     return handleApiError(error);
   }
 };
+
+export const googleAuthApi = async (formData) => {
+  try {
+    const response = await authApi.post("/google", formData);
+
+    return response.data;
+  } catch (e) {
+    return handleApiError(e);
+  }
+};

@@ -5,6 +5,7 @@ import { signInApi } from "../apis/auth.js";
 import toast from "react-hot-toast";
 import { login } from "../redux/authSlice.js";
 import { useDispatch } from "react-redux";
+import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ const SignIn = () => {
       return toast.error(response?.message);
     }
 
-    toast.success(response.message);
+    toast.success(response?.message);
     localStorage.setItem("authToken", response.token);
     dispatch(login({ token: response.token, user: response.user }));
 
@@ -98,6 +99,12 @@ const SignIn = () => {
             >
               {loading ? "Signing up..." : "Login"}
             </Button>
+
+            <span className={"text-center text-lg font-semibold text-gray-400"}>
+              OR
+            </span>
+
+            <OAuth />
           </form>
 
           <div className={"mt-3 flex gap-2 text-sm"}>
