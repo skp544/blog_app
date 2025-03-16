@@ -9,3 +9,12 @@ export const signUpApi = async (formData) => {
     return handleApiError(error);
   }
 };
+
+export const signInApi = async (formData) => {
+  try {
+    const response = await authApi.post("/sign-in", formData);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

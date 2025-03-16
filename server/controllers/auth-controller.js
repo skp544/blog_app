@@ -85,9 +85,9 @@ exports.signUp = async (req, res) => {
  */
 exports.signIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
+    if (!username || !password) {
       return errorResponse({
         res,
         message: "Please provide email and password",
@@ -95,7 +95,7 @@ exports.signIn = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return errorResponse({
@@ -109,7 +109,7 @@ exports.signIn = async (req, res) => {
     if (!isMatch) {
       return errorResponse({
         res,
-        message: "Invalid credentials",
+        message: "Invalid Password",
         status: 401,
       });
     }
