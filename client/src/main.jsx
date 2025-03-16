@@ -7,16 +7,19 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+import ThemeProvider from "./components/ThemeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-          <Toaster position="top-center" reverseOrder={false} />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
+    <PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>
+        <ThemeProvider>
+          <BrowserRouter>
+            <App />
+            <Toaster position="top-center" reverseOrder={false} />
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </PersistGate>
   </StrictMode>,
 );

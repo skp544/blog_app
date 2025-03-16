@@ -1,13 +1,16 @@
-import React, { use } from "react";
+import React from "react";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../redux/themeSlice.js";
 
 const Header = () => {
   const path = useLocation().pathname;
+  const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
 
   return (
     <Navbar className={"border-b-2"}>
@@ -40,8 +43,13 @@ const Header = () => {
       </Button>
 
       <div className={"flex items-center gap-x-2 md:order-2"}>
-        <Button className={"hidden h-10 w-12 sm:inline"} color={"gray"} pill>
-          <FaMoon />
+        <Button
+          className={"hidden h-10 w-12 sm:inline"}
+          color={"gray"}
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === "light" ? <FaSun /> : <FaMoon />}
         </Button>
 
         {isAuthenticated ? (
@@ -53,7 +61,7 @@ const Header = () => {
             <Dropdown.Header>
               <span className={"block text-sm"}>@{user?.username}</span>
               <span className={"block truncate text-sm font-medium"}>
-                @{user?.email}
+                {user?.email}
               </span>
             </Dropdown.Header>
             <Link to={"/dashboard?tab=profile"}>

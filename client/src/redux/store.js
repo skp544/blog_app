@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
+import themeReducer from "./themeSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Uses localStorage by default
 
@@ -12,6 +13,7 @@ const persistConfig = {
 // Combine reducers (in case you add more later)
 const rootReducer = combineReducers({
   auth: authReducer,
+  theme: themeReducer,
 });
 
 // Create persisted reducer
