@@ -6,6 +6,7 @@ const { errorResponse, userFormatter } = require("../lib/helper");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 /**
+ * @desc User Sign Up
  * @body {String} username - The username of the user
  * @body {String} email - The email of the user
  * @body {String} password - The password of the user
@@ -74,7 +75,7 @@ exports.signUp = async (req, res) => {
 };
 
 /**
- * User Sign In
+ * @desc User Sign In
  * @body {String} email - The email of the user
  * @body {String} password - The password of the user
  * @returns {Object} - The user object and JWT token
@@ -125,6 +126,14 @@ exports.signIn = async (req, res) => {
     return errorResponse({ res, message: e.message });
   }
 };
+
+/**
+ * @desc Google Auth
+ * @body {String} name - The name of the user
+ * @body {String} email - The email of the user
+ * @body {String} photoUrl - The photoUrl of the user
+ * @returns {Object} - The user object and JWT token
+ */
 
 exports.googleAuth = async (req, res) => {
   try {

@@ -6,6 +6,15 @@ const {
 const User = require("../models/user-model");
 const bcrypt = require("bcrypt");
 
+/**
+ * @desc Update user profile
+ * @body {String} username - The username of the user
+ * @body {String} email - The email of the user
+ * @body {String} password - The password of the user
+ * @body {File} profilePhoto - The profile photo of the user
+ * @returns {Object} - The updated user object
+ */
+
 exports.userUpdate = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -41,6 +50,28 @@ exports.userUpdate = async (req, res) => {
       success: true,
       message: "User updated successfully!",
       user: userFormatter(user),
+    });
+  } catch (e) {
+    return errorResponse({ res, message: e.message });
+  }
+};
+
+/**
+ * @desc Delete user
+ */
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return errorResponse({ res, message: "User not found", status: 404 });
+    }
+
+    await user.deleteOne();
+
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully!",
     });
   } catch (e) {
     return errorResponse({ res, message: e.message });
