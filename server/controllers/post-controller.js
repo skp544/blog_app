@@ -31,11 +31,18 @@ exports.create = async (req, res) => {
         file: postImage,
       });
     }
+    const slug = title
+      .split(" ")
+      .join("-")
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9-]/g, "");
 
     const post = await Post.create({
+      userId: req.user.id,
       title,
       content,
       category,
+      slug,
       postImage: postImageUrl,
     });
 

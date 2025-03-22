@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FileInput, Select, TextInput, Button } from "flowbite-react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { createPostApi } from "../apis/post.js";
+import toast from "react-hot-toast";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +33,23 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const newFormData = new FormData();
+    newFormData.append("title", formData.title);
+    newFormData.append("category", formData.category);
+    newFormData.append("content", formData.content);
+    newFormData.append("postImage", imageFile);
+
+    setLoading(true);
+    const response = await createPostApi(newFormData);
+    setLoading(false);
+    if (!response.success) {
+      return toast.error(response.message);
+    }
+
+    toast.success("Post created successfully");
+    setFormData({ title: "", category: "uncategorized", content: "" });
+    setImageFile(null);
+    setImageFileUrl(null);
   };
 
   return (
