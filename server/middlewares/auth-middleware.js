@@ -2,6 +2,10 @@ const { errorResponse } = require("../lib/helper");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
 
+/*
+ *  @desc: Middleware to check if user is authenticated
+ */
+
 exports.isAuth = async (req, res, next) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
@@ -40,6 +44,10 @@ exports.isAuth = async (req, res, next) => {
     });
   }
 };
+
+/*
+ *  @desc: Middleware to check if user is admin
+ */
 
 exports.isAdmin = async (req, res, next) => {
   try {

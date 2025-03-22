@@ -6,7 +6,7 @@ import { BsBoxArrowInLeft } from "react-icons/bs";
 import { logout, update } from "../../redux/authSlice.js";
 import { deleteUserApi, updateUserApi } from "../../apis/user.js";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DashProfile = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const DashProfile = () => {
     email: user?.email || "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const filePickerRef = useRef();
@@ -47,8 +48,9 @@ const DashProfile = () => {
     newFormData.append("password", formData.password);
     newFormData.append("profilePhoto", imageFile);
 
+    setLoading(true);
     const response = await updateUserApi(newFormData);
-
+    setLoading(false);
     if (!response.success) {
       return toast.error(response.message);
     }
@@ -124,9 +126,26 @@ const DashProfile = () => {
           onChange={handleChangeInput}
         />
 
-        <Button gradientDuoTone={"purpleToBlue"} type={"submit"} outline>
-          Update
+        <Button
+          gradientDuoTone={"purpleToBlue"}
+          disabled={loading}
+          type={"submit"}
+          outline
+        >
+          {loading ? "Updating..." : "Update"}
         </Button>
+        {user && user.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type={"button"}
+              gradientDuoTone={"purpleToPink"}
+              className={"w-full"}
+              disabled={loading}
+            >
+              Create a Post
+            </Button>
+          </Link>
+        )}
       </form>
 
       <div className={"mt-4 flex items-center justify-between"}>
@@ -135,6 +154,7 @@ const DashProfile = () => {
           color="failure"
           type={"button"}
           onClick={handleDeleteUser}
+          disabled={loading}
         >
           <RiDeleteBin6Line className={"h-5 w-5"} />{" "}
           <span className={"ml-2"}>Delete Account</span>
@@ -144,6 +164,7 @@ const DashProfile = () => {
           type={"button"}
           onClick={handleSignOut}
           color={"gray"}
+          disabled={loading}
           className={"flex cursor-pointer items-center justify-center gap-x-2"}
         >
           <BsBoxArrowInLeft className={"h-5 w-5"} />{" "}
