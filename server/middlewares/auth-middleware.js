@@ -28,7 +28,7 @@ exports.isAuth = async (req, res, next) => {
         id: user._id,
         email: user.email,
         username: user.username,
-        role: user.role,
+        isAdmin: user.isAdmin,
       };
 
       next();
@@ -51,7 +51,8 @@ exports.isAuth = async (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "admin") {
+    console.log(req.user);
+    if (!req.user.isAdmin) {
       return errorResponse({ res, message: "Unauthorized", status: 401 });
     }
 

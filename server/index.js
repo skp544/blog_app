@@ -6,7 +6,7 @@ const authRoutes = require("./routes/auth-routes");
 const cors = require("cors");
 const connectCloudinary = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
-
+const postRoutes = require("./routes/post-route");
 const app = express();
 
 app.use(express.json());
@@ -26,6 +26,7 @@ connectCloudinary();
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/post", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
