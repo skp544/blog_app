@@ -39,5 +39,5 @@ const createAxiosInstance = (basePath) => {
 };
 
 // Create instances for different API groups
-export const userApi = createAxiosInstance("/api/users");
+export const userApi = createAxiosInstance("/api/user");
 export const authApi = createAxiosInstance("/api/auth");

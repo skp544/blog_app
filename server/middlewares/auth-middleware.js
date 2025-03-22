@@ -20,7 +20,6 @@ exports.isAuth = async (req, res, next) => {
         return errorResponse({ status: 404, message: "User not found!" });
       }
 
-      console.log(decode);
       req.user = {
         id: user._id,
         email: user.email,
