@@ -1,6 +1,12 @@
 import { userApi } from "./client.js";
 import { handleApiError } from "../lib/helper.js";
 
+/**
+ * @desc Update user profile
+ * @param {Object} formData - The user data to update
+ * @returns {Object} - The updated user object
+ */
+
 export const updateUserApi = async (formData) => {
   try {
     const response = await userApi.put("/update", formData);
@@ -11,6 +17,11 @@ export const updateUserApi = async (formData) => {
   }
 };
 
+/**
+ * @desc Delete user
+ * @returns {Promise<*|{success: boolean, message: *}>}
+ */
+
 export const deleteUserApi = async () => {
   try {
     const response = await userApi.delete("/delete");
@@ -20,6 +31,11 @@ export const deleteUserApi = async () => {
     return handleApiError(e);
   }
 };
+
+/**
+ * @desc Get all users
+ * @param startIndex
+ */
 
 export const getAllUsersApi = async ({ startIndex = 0 }) => {
   try {
@@ -36,6 +52,12 @@ export const getAllUsersApi = async ({ startIndex = 0 }) => {
     return handleApiError(e);
   }
 };
+
+/**
+ * @desc Delete another user
+ * @param userId
+ * @returns {Promise<*|{success: boolean, message: *}>}
+ */
 
 export const deleteAnotherUserApi = async (userId) => {
   try {

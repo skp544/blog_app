@@ -126,6 +126,12 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+/**
+ * @desc Delete another user
+ * @param {String} id - The id of the user
+ * @returns {Object} - The user object
+ */
+
 exports.deleteAnotherUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

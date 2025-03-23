@@ -195,7 +195,8 @@ exports.deletePost = async (req, res) => {
  */
 
 exports.getPostsByUserId = async (req, res) => {
-  console.log("User ID:", req.user.id);
+  // console.log("User ID:", req.user.id);
+  console.log("Query:", req.query);
 
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -240,5 +241,33 @@ exports.getPostsByUserId = async (req, res) => {
   } catch (e) {
     console.log(e);
     return errorResponse({ res, message: e.message, status: 500 });
+  }
+};
+
+/**
+ * @desc Get post by slug
+ * @param {String} slug - The slug of the post
+ */
+exports.getPostBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const post = await Post.findOne({
+      slug,
+    });
+
+    if (!post) {
+      return res.status.json({
+        success: true,
+        post: {},
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      post,
+    });
+  } catch (e) {
+    return errorResponse({ res });
   }
 };

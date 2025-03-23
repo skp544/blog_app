@@ -8,11 +8,12 @@ import Projects from "./pages/Projects.jsx";
 import Header from "./components/Header.jsx";
 import FooterMain from "./components/FooterMain.jsx";
 import Profile from "./pages/Profile.jsx";
-import PrivateRoute from "./components/dashboard/PrivateRoute.jsx";
+import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
 import AdminRoute from "./components/routes/AdminRoute.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import UpdatePost from "./pages/UpdatePost.jsx";
+import SinglePostPage from "./pages/SinglePostPage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/about"} element={<About />} />
         <Route path={"/projects"} element={<Projects />} />
+        <Route path={"/post/:slug"} element={<SinglePostPage />} />
         <Route element={<PublicRoute />}>
           <Route path={"/sign-in"} element={<SignIn />} />
           <Route path={"/sign-up"} element={<SignUp />} />

@@ -1,6 +1,10 @@
 import { authApi } from "./client.js";
 import { handleApiError } from "../lib/helper.js";
 
+/**
+ * @desc Sign up user
+ * @param formData
+ */
 export const signUpApi = async (formData) => {
   try {
     const response = await authApi.post("/sign-up", formData);
@@ -10,6 +14,10 @@ export const signUpApi = async (formData) => {
   }
 };
 
+/**
+ * @desc Sign in user
+ * @param formData
+ */
 export const signInApi = async (formData) => {
   try {
     const response = await authApi.post("/sign-in", formData);
@@ -19,6 +27,10 @@ export const signInApi = async (formData) => {
   }
 };
 
+/**
+ * @desc google auth
+ * @param formData
+ */
 export const googleAuthApi = async (formData) => {
   try {
     const response = await authApi.post("/google", formData);
