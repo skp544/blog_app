@@ -20,3 +20,29 @@ export const deleteUserApi = async () => {
     return handleApiError(e);
   }
 };
+
+export const getAllUsersApi = async ({ startIndex = 0 }) => {
+  try {
+    console.log(startIndex);
+    if (startIndex !== undefined && startIndex > 0) {
+      const response = await userApi.get(`/all-users?startIndex=${startIndex}`);
+
+      return response.data;
+    } else {
+      const response = await userApi.get("/all-users");
+      return response.data;
+    }
+  } catch (e) {
+    return handleApiError(e);
+  }
+};
+
+export const deleteAnotherUserApi = async (userId) => {
+  try {
+    const response = await userApi.delete(`/delete-user/${userId}`);
+
+    return response.data;
+  } catch (e) {
+    return handleApiError(e);
+  }
+};

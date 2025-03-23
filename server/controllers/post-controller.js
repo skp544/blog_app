@@ -2,7 +2,7 @@ const { errorResponse, uploadImageToCloudinary } = require("../lib/helper");
 const Post = require("../models/post-model");
 const mongoose = require("mongoose");
 
-/*
+/**
  * @desc Create a new post
  * @body {String} title - The title of the post
  * @body {String} content - The content of the post
@@ -61,7 +61,7 @@ exports.create = async (req, res) => {
   }
 };
 
-/*
+/**
  * @desc Update a post
  * @param {String} id - The id of the post
  * @body {String} title - The title of the post
@@ -108,7 +108,7 @@ exports.update = async (req, res) => {
   }
 };
 
-/*
+/**
  * @desc Get all posts
  * @returns {Array} - An array of post objects
  * @access Public
@@ -127,7 +127,7 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
-/*
+/**
  * @desc Get a single post
  * @param {String} id - The id of the post
  * @returns {Object} - The post object
@@ -153,7 +153,7 @@ exports.getSinglePost = async (req, res) => {
   }
 };
 
-/*
+/**
  * @desc Delete a post
  * @param {String} id - The id of the post
  * @access Private
@@ -180,9 +180,18 @@ exports.deletePost = async (req, res) => {
   }
 };
 
-/*
+/**
  * @desc Get posts by user id
+ * @param {String} userId - The id of the user
+ * @param {String} category - The category of the post
+ * @param {String} slug - The slug of the post
+ * @param {String} postId - The id of the post
+ * @param {String} searchTerm - The search term
+ * @param {Number} startIndex - The start index
+ * @param {Number} limit - The limit
+ * @param {String} order - The sort order
  * @returns {Array} - An array of post objects
+ * @access Private
  */
 
 exports.getPostsByUserId = async (req, res) => {
