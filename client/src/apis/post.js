@@ -9,3 +9,30 @@ export const createPostApi = async (formData) => {
     return handleApiError(error);
   }
 };
+
+export const fetchUserPostsApi = async ({ user, startIndex }) => {
+  try {
+    if (startIndex) {
+      const response = await postApi.get(
+        `/posts/user?userId=${startIndex}&startIndex=${startIndex}`,
+      );
+      return response.data;
+    } else if (user) {
+      const response = await postApi.get(`/posts/user?userId=${user.id}`);
+      return response.data;
+    } else {
+      return { success: false, message: "Posts not found" };
+    }
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const deletePostApi = async (postId) => {
+  try {
+    const response = await postApi.delete(`/delete/${postId}`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

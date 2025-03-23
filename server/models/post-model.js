@@ -3,8 +3,8 @@ const { Schema, model } = require("mongoose");
 const postSchema = new Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: Schema.Types.ObjectId, // Change from String to ObjectId
+      ref: "User", // Reference User model
       required: true,
     },
     title: {
@@ -30,7 +30,7 @@ const postSchema = new Schema(
       unique: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Post = model("Post", postSchema);
