@@ -150,3 +150,26 @@ exports.deleteAnotherUser = async (req, res) => {
     return errorResponse({ res, message: e.message });
   }
 };
+
+/**
+ * @desc Get user by ID
+ * @param {String} userId - The id of the user
+ * @returns {Object} - The user object
+ */
+
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+      return errorResponse({ res, message: "User not found", status: 404 });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user: userFormatter(user),
+    });
+  } catch (e) {
+    return errorResponse({ res, message: e.message });
+  }
+};

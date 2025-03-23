@@ -42,3 +42,4 @@ const createAxiosInstance = (basePath) => {
 export const userApi = createAxiosInstance("/api/user");
 export const authApi = createAxiosInstance("/api/auth");
 export const postApi = createAxiosInstance("/api/post");
+export const commentApi = createAxiosInstance("/api/comment");

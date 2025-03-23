@@ -68,3 +68,16 @@ export const deleteAnotherUserApi = async (userId) => {
     return handleApiError(e);
   }
 };
+
+/**
+ * @desc Get user
+ * @param userId
+ */
+export const getUserApi = async (userId) => {
+  try {
+    const response = await userApi.get(`/${userId}`);
+    return response.data;
+  } catch (e) {
+    return handleApiError(e);
+  }
+};
