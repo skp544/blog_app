@@ -4,6 +4,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { createPostApi } from "../apis/post.js";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +52,7 @@ const CreatePost = () => {
     setFormData({ title: "", category: "uncategorized", content: "" });
     setImageFile(null);
     setImageFileUrl(null);
+    navigate("/dashboard?tab=posts");
   };
 
   return (
@@ -91,16 +94,17 @@ const CreatePost = () => {
             accept="image/*"
             onChange={handleImageChange}
           />
-          {imageFile && imageFileUrl && (
-            <img
-              src={imageFileUrl}
-              alt="upload"
-              className="h-72 w-full object-cover"
-            />
-          )}
         </div>
+        {imageFile && imageFileUrl && (
+          <img
+            src={imageFileUrl}
+            alt="upload"
+            className="h-72 w-full object-cover"
+          />
+        )}
         <ReactQuill
           theme="snow"
+          value={formData.content}
           placeholder="Write something..."
           className="mb-12 h-72 placeholder:dark:text-white"
           required

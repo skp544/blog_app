@@ -12,6 +12,7 @@ const DashPosts = () => {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     const response = await fetchUserPostsApi({ user });
@@ -40,7 +41,9 @@ const DashPosts = () => {
   const handleDeletePost = async () => {
     if (!postIdToDelete) return;
 
+    setLoading(true);
     const response = await deletePostApi(postIdToDelete);
+    setLoading(false);
     if (!response.success) {
       return toast.error(response.message);
     }
@@ -143,7 +146,7 @@ const DashPosts = () => {
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleDeletePost}>
-                Yes, I'm sure
+                {loading ? "Deleting..." : "Yes, I'm sure"}
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
                 No, cancel

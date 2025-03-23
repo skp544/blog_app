@@ -10,6 +10,15 @@ export const createPostApi = async (formData) => {
   }
 };
 
+export const fetchPostApi = async (postId) => {
+  try {
+    const response = await postApi.get(`/${postId}`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
 export const fetchUserPostsApi = async ({ user, startIndex }) => {
   try {
     if (startIndex) {
@@ -31,6 +40,15 @@ export const fetchUserPostsApi = async ({ user, startIndex }) => {
 export const deletePostApi = async (postId) => {
   try {
     const response = await postApi.delete(`/delete/${postId}`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const updatePostApi = async (postId, formData) => {
+  try {
+    const response = await postApi.put(`/update/${postId}`, formData);
     return response.data;
   } catch (error) {
     return handleApiError(error);
