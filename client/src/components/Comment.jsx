@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import moment from "moment";
 import { Button, Textarea } from "flowbite-react";
 import { FaThumbsUp } from "react-icons/fa6";
+import { editCommentApi } from "../apis/comment.js";
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const { user } = useSelector((state) => state.auth);
@@ -20,9 +21,26 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
     setCommentUser(response.user);
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    const formData = {
+      content: editedContent,
+    };
 
-  const handleEdit = () => {};
+    const response = await editCommentApi({ formData, commentId: comment._id });
+
+    if (!response.success) {
+      return toast.error(response.message);
+    }
+
+    setIsEditing(false);
+    onEdit(comment, editedContent);
+    return toast.success(response.message);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedContent(comment.content);
+  };
 
   useEffect(() => {
     if (comment) {
@@ -35,8 +53,11 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
       <div className="mr-3 flex-shrink-0">
         <img
           className="h-10 w-10 rounded-full bg-gray-200"
-          src={commentUser.photoUrl}
-          alt={commentUser.username}
+          src={
+            commentUser?.photoUrl ||
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          }
+          alt={commentUser?.username || "anonymous user"}
         />
       </div>
       <div className="flex-1">

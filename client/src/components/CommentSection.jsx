@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Textarea, Button, Modal } from "flowbite-react";
 import Comment from "./Comment.jsx";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
-import { createCommentApi, getPostCommentsApis } from "../apis/comment.js";
+import {
+  createCommentApi,
+  getPostCommentsApis,
+  likeCommentApi,
+} from "../apis/comment.js";
 import toast from "react-hot-toast";
 
 const CommentSection = ({ postId }) => {
@@ -13,6 +17,7 @@ const CommentSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
+  const navigate = useNavigate();
 
   const fetchComments = async () => {
     const response = await getPostCommentsApis(postId);
@@ -39,9 +44,37 @@ const CommentSection = ({ postId }) => {
     return toast.success(response.message);
   };
 
-  const handleLike = async () => {};
+  const handleLike = async (commentId) => {
+    if (!user) {
+      return navigate("/sign-in");
+    }
 
-  const handleEdit = async () => {};
+    const response = await likeCommentApi(commentId);
+
+    if (!response.success) {
+      return toast.error(response.message);
+    }
+
+    setComments(
+      comments.map((comment) =>
+        comment._id === commentId
+          ? {
+              ...comment,
+              likes: response?.comment?.likes,
+              numberOfLikes: response?.comment.likes?.length,
+            }
+          : comment,
+      ),
+    );
+  };
+
+  const handleEdit = async (comment, editedContent) => {
+    setComments(
+      comments.map((c) =>
+        c._id === comment._id ? { ...c, content: editedContent } : c,
+      ),
+    );
+  };
 
   const handleDelete = async () => {};
 
